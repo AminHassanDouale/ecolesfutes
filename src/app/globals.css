@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --teal: #5bbcb8;
+  --orange: #e8522a;
+  --gold: #c9a227;
+  --navy: #1a3a5c;
+  --cream: #fffaf2;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #fffaf2;
+  color: #1a3a5c;
+  font-family: var(--font-nunito), system-ui, sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f5edd8;
+}
+::-webkit-scrollbar-thumb {
+  background: #5bbcb8;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #3d9e9a;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #5bbcb8, #c9a227);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-orange {
+  background: linear-gradient(135deg, #e8522a, #c9a227);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.gradient-text-navy {
+  background: linear-gradient(135deg, #1a3a5c, #5bbcb8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass card */
+.glass-card {
+  background: rgba(255, 250, 242, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(91, 188, 184, 0.2);
+}
+
+.glass-card-dark {
+  background: rgba(26, 58, 92, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(91, 188, 184, 0.3);
+}
+
+/* Blob shapes */
+.blob {
+  border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+}
+
+.blob-2 {
+  border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+}
+
+/* Section dividers */
+.wave-divider {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.wave-divider svg {
+  position: relative;
+  display: block;
+  width: calc(100% + 1.3px);
+  height: 60px;
+}
+
+/* Shimmer effect */
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Button base styles */
+.btn-primary {
+  @apply inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white transition-all duration-300;
+  background: linear-gradient(135deg, #e8522a, #c43e1a);
+  box-shadow: 0 4px 20px rgba(232, 82, 42, 0.4);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(232, 82, 42, 0.5);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-outline {
+  @apply inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold transition-all duration-300;
+  border: 2px solid #c9a227;
+  color: #c9a227;
+}
+.btn-outline:hover {
+  background: #c9a227;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(201, 162, 39, 0.4);
+}
+
+.btn-teal {
+  @apply inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-white transition-all duration-300;
+  background: linear-gradient(135deg, #5bbcb8, #3d9e9a);
+  box-shadow: 0 4px 20px rgba(91, 188, 184, 0.4);
+}
+.btn-teal:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(91, 188, 184, 0.5);
+}
+
+/* Card hover 3D transform */
+.card-3d {
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275),
+    box-shadow 0.4s ease;
+  transform-style: preserve-3d;
+}
+.card-3d:hover {
+  transform: perspective(1000px) rotateY(-5deg) rotateX(3deg) translateY(-8px);
+  box-shadow: 20px 20px 60px rgba(26, 58, 92, 0.2);
+}
+
+/* Floating badge */
+.floating-badge {
+  animation: float 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-15px) rotate(2deg);
+  }
+}
+
+/* Stripe pattern */
+.stripe-pattern {
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(91, 188, 184, 0.05) 10px,
+    rgba(91, 188, 184, 0.05) 20px
+  );
+}
+
+/* Dot grid pattern */
+.dot-pattern {
+  background-image: radial-gradient(
+    rgba(91, 188, 184, 0.15) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+}
+
+/* Responsive typography */
+.heading-xl {
+  @apply text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold font-serif leading-tight;
+}
+
+.heading-lg {
+  @apply text-3xl md:text-4xl lg:text-5xl font-bold font-serif leading-tight;
+}
+
+.heading-md {
+  @apply text-2xl md:text-3xl lg:text-4xl font-bold font-serif leading-tight;
+}
+
+/* Focus styles */
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #5bbcb8;
+  box-shadow: 0 0 0 3px rgba(91, 188, 184, 0.2);
+}
+
+/* Selection */
+::selection {
+  background: rgba(91, 188, 184, 0.3);
+  color: #1a3a5c;
+}
