@@ -3,7 +3,7 @@ import { Playfair_Display, Nunito } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { SchoolJsonLd } from "@/components/shared/JsonLd.tsx"
+import { SchoolJsonLd } from "@/components/shared/JsonLd"
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
