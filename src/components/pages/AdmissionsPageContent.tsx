@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { CheckCircle, Download, Calendar, FileText, ArrowRight, Send } from "lucide-react";
+import { CheckCircle, Download, Calendar, FileText, ArrowRight, Send, Paperclip } from "lucide-react";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 import SectionHeader from "@/components/shared/SectionHeader";
 
@@ -11,9 +11,9 @@ const levels = [
   {
     emoji: "🌸",
     title: "Maternelle",
-    ages: "2 – 5 ans",
-    requirements: ["Âge minimum : 2 ans révolus à la rentrée", "Entretien avec les parents", "Visite de découverte obligatoire"],
-    docs: ["Acte de naissance", "Carnet de vaccination", "2 photos d'identité"],
+    ages: "2 ans et demi – 5 ans",
+    requirements: ["Âge minimum : 2 ans et demi révolus à la rentrée", "Entretien avec les parents", "Visite de découverte obligatoire"],
+    docs: ["Acte de naissance", "Photo d'identité (2 exemplaires)", "Carnet de vaccination", "Carnets scolaires (si scolarisé précédemment)"],
     color: "from-pink-50 to-rose-50",
     border: "border-pink-200",
   },
@@ -22,7 +22,7 @@ const levels = [
     title: "Primaire",
     ages: "6 – 11 ans",
     requirements: ["Dossier scolaire de l'année précédente", "Test de niveau (optionnel)", "Entretien avec un enseignant"],
-    docs: ["Acte de naissance", "Certificat de scolarité précédent", "Bulletins N-1", "2 photos d'identité"],
+    docs: ["Acte de naissance", "Photo d'identité (2 exemplaires)", "Carnets scolaires des 2 dernières années", "Certificat de scolarité précédent"],
     color: "from-teal-50 to-cyan-50",
     border: "border-teal-200",
   },
@@ -31,7 +31,7 @@ const levels = [
     title: "Collège",
     ages: "12 – 15 ans",
     requirements: ["Bulletins des 2 dernières années", "Test d'admission obligatoire", "Entretien de motivation"],
-    docs: ["Acte de naissance", "Bulletins des 2 dernières années", "Lettre de motivation", "2 photos d'identité"],
+    docs: ["Acte de naissance", "Photo d'identité (2 exemplaires)", "Carnets scolaires des 2 dernières années", "Certificat de scolarité précédent"],
     color: "from-blue-50 to-indigo-50",
     border: "border-blue-200",
   },
@@ -44,19 +44,22 @@ const pricing = [
 ];
 
 type FormData = {
-  parentNom: string;
-  parentPrenom: string;
+  parentNomComplet: string;
   email: string;
   telephone: string;
-  enfantNom: string;
-  enfantPrenom: string;
+  enfantNomComplet: string;
   enfantAge: string;
   niveau: string;
+  autreEcole: string;
   message: string;
+  acteNaissance: FileList;
+  photoIdentite: FileList;
+  carnets: FileList;
 };
 
 export default function AdmissionsPageContent() {
   const [submitted, setSubmitted] = useState(false);
+  const [autreEcole, setAutreEcole] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
 
   const onSubmit = (data: FormData) => {
@@ -122,9 +125,9 @@ export default function AdmissionsPageContent() {
           />
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
             {[
-              { icon: "📅", title: "Ouverture préinscriptions", date: "1er Mars 2025", color: "bg-teal/10 border-teal/30" },
-              { icon: "🏫", title: "Journées Portes Ouvertes", date: "15 & 22 Mars 2025", color: "bg-gold/10 border-gold/30" },
-              { icon: "🎒", title: "Rentrée scolaire", date: "1er Septembre 2025", color: "bg-orange/10 border-orange/30" },
+              { icon: "📅", title: "Ouverture préinscriptions", date: "5 Août 2025", color: "bg-teal/10 border-teal/30" },
+              { icon: "🏫", title: "Journées Portes Ouvertes", date: "Février & Août 2025", color: "bg-gold/10 border-gold/30" },
+              { icon: "🎒", title: "Rentrée scolaire", date: "5 Septembre 2025", color: "bg-orange/10 border-orange/30" },
             ].map((item, i) => (
               <AnimatedSection key={item.title} delay={i * 0.1} direction="scale">
                 <div className={`${item.color} border rounded-2xl p-6 flex items-start gap-4`}>
@@ -228,7 +231,6 @@ export default function AdmissionsPageContent() {
               </tbody>
             </table>
           </div>
-        
         </div>
       </section>
 
@@ -258,26 +260,19 @@ export default function AdmissionsPageContent() {
           ) : (
             <form onSubmit={handleSubmit(onSubmit)} className="mt-12 space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+
                 {/* Parent info */}
                 <div className="md:col-span-2">
                   <h3 className="font-bold text-navy text-lg mb-4 flex items-center gap-2">
                     👨‍👩‍👧 Informations du parent
                   </h3>
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-navy mb-2">Nom du parent *</label>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-bold text-navy mb-2">Nom complet du parent *</label>
                   <input
-                    {...register("parentNom", { required: true })}
-                    className={`w-full px-4 py-3 rounded-xl border ${errors.parentNom ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal transition-colors`}
-                    placeholder="Votre nom"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-navy mb-2">Prénom *</label>
-                  <input
-                    {...register("parentPrenom", { required: true })}
-                    className={`w-full px-4 py-3 rounded-xl border ${errors.parentPrenom ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal transition-colors`}
-                    placeholder="Votre prénom"
+                    {...register("parentNomComplet", { required: true })}
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.parentNomComplet ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal transition-colors`}
+                    placeholder="Nom et prénom complets"
                   />
                 </div>
                 <div>
@@ -294,7 +289,7 @@ export default function AdmissionsPageContent() {
                   <input
                     {...register("telephone", { required: true })}
                     className={`w-full px-4 py-3 rounded-xl border ${errors.telephone ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal transition-colors`}
-                    placeholder="+XXX XX XX XX XX"
+                    placeholder="+253 XX XX XX XX"
                   />
                 </div>
 
@@ -304,20 +299,12 @@ export default function AdmissionsPageContent() {
                     🎒 Informations de l&apos;enfant
                   </h3>
                 </div>
-                <div>
-                  <label className="block text-sm font-bold text-navy mb-2">Nom de l&apos;enfant *</label>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-bold text-navy mb-2">Nom complet de l&apos;enfant *</label>
                   <input
-                    {...register("enfantNom", { required: true })}
-                    className={`w-full px-4 py-3 rounded-xl border ${errors.enfantNom ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal transition-colors`}
-                    placeholder="Nom"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-bold text-navy mb-2">Prénom *</label>
-                  <input
-                    {...register("enfantPrenom", { required: true })}
-                    className={`w-full px-4 py-3 rounded-xl border ${errors.enfantPrenom ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal transition-colors`}
-                    placeholder="Prénom"
+                    {...register("enfantNomComplet", { required: true })}
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.enfantNomComplet ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal transition-colors`}
+                    placeholder="Nom et prénom complets de l'enfant"
                   />
                 </div>
                 <div>
@@ -335,12 +322,99 @@ export default function AdmissionsPageContent() {
                     className={`w-full px-4 py-3 rounded-xl border ${errors.niveau ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal transition-colors`}
                   >
                     <option value="">Choisir un niveau</option>
-                    <option value="maternelle">🌸 Maternelle (2-5 ans)</option>
-                    <option value="primaire">📚 Primaire (6-11 ans)</option>
-                    <option value="college">🚀 Collège (12-15 ans)</option>
+                    <option value="maternelle">🌸 Maternelle (2 ans et demi – 5 ans)</option>
+                    <option value="primaire">📚 Primaire (6 – 11 ans)</option>
+                    <option value="college">🚀 Collège (12 – 15 ans)</option>
                   </select>
                 </div>
 
+                {/* Previous school */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-bold text-navy mb-2">
+                    L&apos;enfant était-il scolarisé dans une autre école auparavant ? *
+                  </label>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        value="oui"
+                        {...register("autreEcole", { required: true })}
+                        onChange={() => setAutreEcole(true)}
+                        className="accent-teal w-4 h-4"
+                      />
+                      <span className="text-navy text-sm font-medium">Oui</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        value="non"
+                        {...register("autreEcole", { required: true })}
+                        onChange={() => setAutreEcole(false)}
+                        className="accent-teal w-4 h-4"
+                      />
+                      <span className="text-navy text-sm font-medium">Non</span>
+                    </label>
+                  </div>
+                </div>
+
+                {/* Documents */}
+                <div className="md:col-span-2">
+                  <h3 className="font-bold text-navy text-lg mb-4 flex items-center gap-2 mt-2">
+                    <Paperclip size={20} className="text-teal" /> Pièces jointes
+                  </h3>
+                  <p className="text-navy/50 text-sm mb-4">Formats acceptés : PDF, JPG, PNG — 5 Mo max par fichier</p>
+                </div>
+
+                {/* Acte de naissance */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-bold text-navy mb-2">
+                    Acte de naissance *
+                  </label>
+                  <div className={`w-full px-4 py-3 rounded-xl border ${errors.acteNaissance ? "border-red-400" : "border-cream-dark"} bg-cream`}>
+                    <input
+                      type="file"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      {...register("acteNaissance", { required: true })}
+                      className="w-full text-sm text-navy/70 file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-teal/10 file:text-teal hover:file:bg-teal/20 cursor-pointer"
+                    />
+                  </div>
+                </div>
+
+                {/* Photo d'identité */}
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-bold text-navy mb-2">
+                    Photo d&apos;identité de l&apos;enfant *
+                  </label>
+                  <div className={`w-full px-4 py-3 rounded-xl border ${errors.photoIdentite ? "border-red-400" : "border-cream-dark"} bg-cream`}>
+                    <input
+                      type="file"
+                      accept=".jpg,.jpeg,.png"
+                      {...register("photoIdentite", { required: true })}
+                      className="w-full text-sm text-navy/70 file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-teal/10 file:text-teal hover:file:bg-teal/20 cursor-pointer"
+                    />
+                  </div>
+                </div>
+
+                {/* Carnets scolaires — conditionnel */}
+                {autreEcole && (
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-bold text-navy mb-2">
+                      Carnets scolaires (ancienne école) *
+                    </label>
+                    <div className={`w-full px-4 py-3 rounded-xl border ${errors.carnets ? "border-red-400" : "border-cream-dark"} bg-amber-50 border-amber-200`}>
+                      <input
+                        type="file"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        multiple
+                        {...register("carnets", { required: autreEcole })}
+                        className="w-full text-sm text-navy/70 file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-gold/20 file:text-gold hover:file:bg-gold/30 cursor-pointer"
+                      />
+                    </div>
+                    <p className="text-xs text-navy/50 mt-1.5">Vous pouvez joindre plusieurs fichiers (bulletins, relevés de notes, etc.)</p>
+                  </div>
+                )}
+
+                {/* Message */}
                 <div className="md:col-span-2">
                   <label className="block text-sm font-bold text-navy mb-2">Message (optionnel)</label>
                   <textarea

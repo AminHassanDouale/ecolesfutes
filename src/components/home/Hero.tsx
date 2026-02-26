@@ -16,8 +16,8 @@ const floatingElements = [
 ];
 
 const quickStats = [
-  { icon: BookOpen, value: "+500", label: "Élèves" },
-  { icon: Users, value: "+40", label: "Enseignants" },
+  { icon: BookOpen, value: "+200", label: "Élèves" },
+  { icon: Users, value: "+10", label: "Enseignants" },
   { icon: Trophy, value: "98%", label: "Réussite" },
   { icon: Star, value: "+10 ans", label: "Excellence" },
 ];
@@ -183,9 +183,13 @@ export default function Hero() {
             />
 
             {/* Central logo */}
-            <div className="absolute inset-16 rounded-full bg-gradient-to-br from-teal to-teal-dark flex items-center justify-center shadow-glow">
-              <span className="text-7xl filter drop-shadow-lg">🦉</span>
-            </div>
+            <div className="absolute inset-16 rounded-full bg-gradient-to-br from-white to-white flex items-center justify-center shadow-glow">
+  <img
+    src="/logos.png"
+    alt="School mascot"
+    className="w-3/4 h-3/4 object-contain filter drop-shadow-lg"
+  />
+</div>
 
             {/* Orbiting badges */}
             {[

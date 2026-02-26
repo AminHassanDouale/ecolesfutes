@@ -18,14 +18,13 @@ const activities = [
 
 const schedule = [
   { time: "7h30", activity: "Accueil des enfants", icon: "🌅" },
-  { time: "8h15", activity: "Atelier du matin (dessin, coloriage)", icon: "🎨" },
-  { time: "9h30", activity: "Activités dirigées (langage, maths)", icon: "📚" },
-  { time: "10h30", activity: "Récréation & motricité", icon: "🏃" },
-  { time: "11h00", activity: "Atelier artistique ou musical", icon: "🎵" },
-  { time: "12h00", activity: "Déjeuner & repos", icon: "😴" },
-  { time: "14h00", activity: "Lecture & histoires", icon: "📖" },
-  { time: "15h00", activity: "Ateliers libres", icon: "🎯" },
-  { time: "17h30", activity: "Accueil périscolaire / retour maison", icon: "🏠" },
+  { time: "8h00", activity: "Atelier du matin (dessin, coloriage)", icon: "🎨" },
+  { time: "9h00", activity: "Activités dirigées (langage, éveil)", icon: "📚" },
+  { time: "10h00", activity: "Récréation & motricité", icon: "🏃" },
+  { time: "10h30", activity: "Atelier artistique ou musical", icon: "🎵" },
+  { time: "11h15", activity: "Lecture & histoires", icon: "📖" },
+  { time: "12h00", activity: "Ateliers libres & rangement", icon: "🎯" },
+  { time: "12h30", activity: "Départ — à demain !", icon: "🏠" },
 ];
 
 const skills = [
@@ -66,7 +65,7 @@ export default function MaternellePage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="inline-flex items-center gap-2 bg-white/20 border border-white/40 text-white rounded-full px-5 py-2 text-sm font-bold mb-6"
               >
-                🌸 Maternelle · 2 – 5 ans
+                🌸 Maternelle · 2 ans et demi
               </motion.div>
               <motion.h1
                 initial={{ opacity: 0, y: 40 }}
@@ -170,9 +169,9 @@ export default function MaternellePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <SectionHeader
             badge="Activités"
-            title="Une journée riche et"
+            title="Une matinée riche et"
             titleHighlight="stimulante"
-            subtitle="Des activités variées et adaptées pour éveiller toutes les intelligences de votre enfant."
+            subtitle="Des activités variées et adaptées pour éveiller toutes les intelligences de votre enfant en une demi-journée bien remplie."
           />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
             {activities.map((act, i) => (
@@ -193,8 +192,8 @@ export default function MaternellePage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           <SectionHeader
             badge="Organisation"
-            title="La journée type"
-            subtitle="Un emploi du temps équilibré pour un enfant épanoui."
+            title="La matinée type"
+            subtitle="Un emploi du temps de 7h30 à 12h30, équilibré pour un enfant épanoui."
           />
           <div className="mt-12 relative">
             <div className="absolute left-1/2 top-0 bottom-0 w-0.5 bg-pink-200 hidden md:block" />
@@ -213,7 +212,7 @@ export default function MaternellePage() {
                     ) : <div />}
                   </div>
                   <div className="flex-shrink-0 hidden md:flex items-center justify-center">
-                    <div className="w-4 h-4 rounded-full bg-pink-400 ring-4 ring-pink-100" />
+                    <div className={`w-4 h-4 rounded-full ring-4 ring-pink-100 ${i === schedule.length - 1 ? "bg-gold" : "bg-pink-400"}`} />
                   </div>
                   <div className="flex-1">
                     {i % 2 !== 0 ? (

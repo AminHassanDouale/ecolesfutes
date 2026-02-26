@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 const stats = [
   {
     emoji: "🎓",
-    value: 500,
+    value: 200,
     prefix: "+",
     suffix: "",
     label: "Élèves accompagnés",
@@ -17,7 +17,7 @@ const stats = [
   },
   {
     emoji: "👩‍🏫",
-    value: 40,
+    value: 10,
     prefix: "+",
     suffix: "",
     label: "Enseignants qualifiés",

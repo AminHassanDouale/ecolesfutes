@@ -3,34 +3,28 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useForm } from "react-hook-form";
-import { MapPin, Phone, Mail, Clock, MessageCircle, ChevronDown, Send } from "lucide-react";
+import { MapPin, Phone, Mail, Clock, MessageCircle, ChevronDown, Send, Smartphone } from "lucide-react";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 import SectionHeader from "@/components/shared/SectionHeader";
 
 const faqs = [
   {
     q: "Quels sont les horaires des classes ?",
-    a: "Les cours débutent à 8h00 et se terminent à 17h00 du lundi au vendredi. La maternelle dispose d'un accueil périscolaire dès 7h30 jusqu'à 18h00.",
+    a: "Les cours débutent à 7h30 et se terminent à 12h30 du dimanche au jeudi.",
   },
-  {
-    q: "Y a-t-il une cantine et un service de transport ?",
-    a: "Oui, nous disposons d'une cantine avec des repas équilibrés et nutritifs. Un service de transport scolaire est disponible pour certains quartiers — contactez-nous pour les détails.",
-  },
+  
   {
     q: "Comment accéder à ScolApp ?",
-    a: "Téléchargez l'application ScolApp sur l'App Store ou Google Play, puis connectez-vous avec les identifiants fournis lors de l'inscription de votre enfant.",
+    a: "Téléchargez bientot l'application ScolApp sur l'App Store ou Google Play, puis connectez-vous avec les identifiants fournis lors de l'inscription de votre enfant.",
   },
   {
     q: "Quand ouvrent les inscriptions ?",
-    a: "Les préinscriptions ouvrent généralement en mars pour l'année suivante. Consultez la section Admissions pour les dates précises.",
+    a: "Les préinscriptions ouvrent généralement en août pour l'année suivante. Consultez la section Admissions pour les dates précises.",
   },
-  {
-    q: "Y a-t-il des bourses disponibles ?",
-    a: "Oui, nous proposons des bourses aux élèves méritants sous conditions de ressources. Contactez notre secrétariat pour plus d'informations sur les critères et la procédure.",
-  },
+  
   {
     q: "Comment organiser une visite de l'école ?",
-    a: "Remplissez notre formulaire de contact en indiquant votre souhait de visite, ou appelez directement notre secrétariat. Les visites se déroulent du mardi au vendredi sur rendez-vous.",
+    a: "Remplissez notre formulaire de contact en indiquant votre souhait de visite, ou appelez directement notre secrétariat. Les visites se déroulent du dimanche au jeudi sur rendez-vous.",
   },
 ];
 
@@ -127,22 +121,29 @@ export default function ContactPageContent() {
                 {
                   icon: MapPin,
                   title: "Adresse",
-                  content: "Gabode 4, Djibouti-Ville\nRépublique de Djibouti",
+                  content: "Gabode 5, Djibouti-Ville\nRépublique de Djibouti",
                   color: "text-orange bg-orange/10",
                 },
                 {
                   icon: Phone,
-                  title: "Téléphone",
-                  content: "+XXX XX XX XX XX",
+                  title: "Fixe",
+                  content: "+253 21 34 86 96",
                   color: "text-teal bg-teal/10",
-                  link: "tel:+XXXXXXXXXXX",
+                  link: "tel:+25321348696",
+                },
+                {
+                  icon: Smartphone,
+                  title: "Mobile",
+                  content: "+253 77 19 80 27",
+                  color: "text-teal bg-teal/10",
+                  link: "tel:+25377198027",
                 },
                 {
                   icon: MessageCircle,
                   title: "WhatsApp",
-                  content: "+XXX XX XX XX XX",
+                  content: "+253 77 19 80 27",
                   color: "text-green-600 bg-green-50",
-                  link: "https://wa.me/XXXXXXXXXXX",
+                  link: "https://wa.me/25377198027",
                 },
                 {
                   icon: Mail,
@@ -154,7 +155,7 @@ export default function ContactPageContent() {
                 {
                   icon: Clock,
                   title: "Horaires du secrétariat",
-                  content: "Lun–Ven : 7h30 – 17h30\nSamedi : 8h00 – 12h00",
+                  content: "Dim–Jeu : 7h30 – 12h30\nSamedi : 8h00 – 12h00",
                   color: "text-gold bg-gold/10",
                 },
               ].map(({ icon: Icon, title, content, color, link }, i) => (
@@ -178,9 +179,11 @@ export default function ContactPageContent() {
               ))}
 
               {/* WhatsApp CTA */}
-              <AnimatedSection delay={0.6} direction="left">
+              <AnimatedSection delay={0.7} direction="left">
                 <a
-                  href="https://wa.me/XXXXXXXXXXX"
+                  href="https://wa.me/25377198027"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center gap-3 bg-green-500 text-white font-bold px-6 py-4 rounded-2xl hover:-translate-y-1 hover:shadow-lg transition-all"
                 >
                   <MessageCircle size={24} />
@@ -208,7 +211,7 @@ export default function ContactPageContent() {
                           <label className="block text-sm font-bold text-navy mb-2">Nom complet *</label>
                           <input
                             {...register("nom", { required: true })}
-                            className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal transition-colors"
+                            className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal outline-none transition-colors"
                             placeholder="Votre nom"
                           />
                         </div>
@@ -217,7 +220,7 @@ export default function ContactPageContent() {
                           <input
                             type="email"
                             {...register("email", { required: true })}
-                            className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal transition-colors"
+                            className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal outline-none transition-colors"
                             placeholder="votre@email.com"
                           />
                         </div>
@@ -227,15 +230,15 @@ export default function ContactPageContent() {
                           <label className="block text-sm font-bold text-navy mb-2">Téléphone</label>
                           <input
                             {...register("telephone")}
-                            className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal transition-colors"
-                            placeholder="+XXX XX XX XX XX"
+                            className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal outline-none transition-colors"
+                            placeholder="+253 XX XX XX XX"
                           />
                         </div>
                         <div>
                           <label className="block text-sm font-bold text-navy mb-2">Objet *</label>
                           <select
                             {...register("objet", { required: true })}
-                            className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal transition-colors"
+                            className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal outline-none transition-colors"
                           >
                             <option value="">Choisir un objet</option>
                             <option>Inscription / Préinscription</option>
@@ -252,7 +255,7 @@ export default function ContactPageContent() {
                         <textarea
                           {...register("message", { required: true })}
                           rows={4}
-                          className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal transition-colors resize-none"
+                          className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal outline-none transition-colors resize-none"
                           placeholder="Votre message..."
                         />
                       </div>
@@ -278,7 +281,7 @@ export default function ContactPageContent() {
                           <input
                             type="date"
                             {...register("visitDate")}
-                            className="w-full px-4 py-3 rounded-xl border border-teal/40 bg-teal/5 focus:border-teal transition-colors"
+                            className="w-full px-4 py-3 rounded-xl border border-teal/40 bg-teal/5 focus:border-teal outline-none transition-colors"
                           />
                         </motion.div>
                       )}
@@ -297,8 +300,7 @@ export default function ContactPageContent() {
 
       {/* Google Maps — Djibouti */}
       <section className="relative overflow-hidden" style={{ height: "420px" }}>
-        {/* Overlay label */}
-        <div className="absolute top-4 left-4 z-10 glass-card rounded-2xl px-4 py-3 shadow-card-hover flex items-center gap-3">
+        <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-sm rounded-2xl px-4 py-3 shadow-card-hover flex items-center gap-3">
           <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal to-teal-dark flex items-center justify-center shadow-glow shrink-0">
             <span className="text-xl">🦉</span>
           </div>
@@ -306,7 +308,7 @@ export default function ContactPageContent() {
             <p className="font-bold text-navy text-sm">Les Petits Futés</p>
             <p className="text-navy/60 text-xs flex items-center gap-1">
               <MapPin size={11} />
-              Djibouti-Ville, Djibouti
+              Gabode 5, Djibouti-Ville
             </p>
           </div>
         </div>

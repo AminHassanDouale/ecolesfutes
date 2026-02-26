@@ -8,36 +8,75 @@ import SectionHeader from "@/components/shared/SectionHeader";
 
 const news = [
   {
-    tag: "Résultats",
-    tagColor: "bg-teal/10 text-teal",
-    date: "Janvier 2025",
-    title: "98% de réussite aux examens de fin d'année 2024",
-    excerpt:
-      "Nos élèves ont brillé lors des examens nationaux. Un résultat qui témoigne de l'excellence pédagogique de notre équipe enseignante.",
-    emoji: "🏆",
-    href: "/actualites/resultats-2024",
-  },
-  {
-    tag: "Événement",
-    tagColor: "bg-orange/10 text-orange",
-    date: "Décembre 2024",
-    title: "Gala de fin d'année : une soirée inoubliable",
-    excerpt:
-      "Chants, danses, saynètes et remises de diplômes... La fête de fin d'année a réuni toute la communauté scolaire dans la joie.",
-    emoji: "🎭",
-    href: "/actualites/gala-2024",
-  },
-  {
     tag: "ScolApp",
     tagColor: "bg-gold/10 text-gold",
-    date: "Novembre 2024",
+    date: "Février 2026",
+    sortDate: new Date("2026-02-01"),
     title: "Nouvelle version de ScolApp disponible",
     excerpt:
       "Téléchargez la nouvelle version et profitez du paiement en ligne, des notifications en temps réel et d'une interface repensée.",
     emoji: "📱",
     href: "/actualites/scolapp-update",
   },
+  {
+    tag: "Fête de Noël",
+    tagColor: "bg-red-500/10 text-red-600",
+    date: "Décembre 2025",
+    sortDate: new Date("2025-12-01"),
+    title: "Spectacle de Noël : magie et émerveillement",
+    excerpt:
+      "Les enfants ont présenté un magnifique spectacle de Noël, mettant en scène chants et pièces de théâtre devant des parents ravis.",
+    emoji: "🎄",
+    href: "/actualites/noel-2025",
+  },
+  {
+    tag: "Fête de l'Année",
+    tagColor: "bg-gold/10 text-gold",
+    date: "Décembre 2025",
+    sortDate: new Date("2025-12-15"),
+    title: "Fête de l'Année : célébrons ensemble !",
+    excerpt:
+      "Retrouvez-nous pour une soirée festive pleine de surprises, de musique et de partage pour accueillir la nouvelle année en famille.",
+    emoji: "🎆",
+    href: "/actualites/fete-annee-2025",
+  },
+  {
+    tag: "Résultats",
+    tagColor: "bg-teal/10 text-teal",
+    date: "Juin 2025",
+    sortDate: new Date("2025-06-20"),
+    title: "98% de réussite aux examens de fin d'année 2024-2025",
+    excerpt:
+      "Nos élèves ont brillé lors des examens nationaux. Un résultat qui témoigne de l'excellence pédagogique de notre équipe enseignante.",
+    emoji: "🏆",
+    href: "/actualites/resultats-2025",
+  },
+  {
+    tag: "Fête de Fin d'École",
+    tagColor: "bg-teal/10 text-teal",
+    date: "Juin 2025",
+    sortDate: new Date("2025-06-10"),
+    title: "Fête de fin d'école : une soirée inoubliable",
+    excerpt:
+      "Chants, danses, saynètes et remises de diplômes... La fête de fin d'école a réuni toute la communauté scolaire dans la joie et l'émotion.",
+    emoji: "🎓",
+    href: "/actualites/fete-fin-ecole-2025",
+  },
+  {
+    tag: "Halloween",
+    tagColor: "bg-orange/10 text-orange",
+    date: "Octobre 2024",
+    sortDate: new Date("2024-10-31"),
+    title: "Halloween à l'école : frissons et déguisements !",
+    excerpt:
+      "Sorcières, vampires et fantômes ont envahi l'école ! Les élèves ont rivalisé de créativité pour leurs costumes lors de cette journée spéciale.",
+    emoji: "🎃",
+    href: "/actualites/halloween-2024",
+  },
 ];
+
+// Sorted from most recent to oldest
+const sortedNews = [...news].sort((a, b) => b.sortDate.getTime() - a.sortDate.getTime());
 
 export default function NewsPreview() {
   const { ref, inView } = useInView({ threshold: 0.1, triggerOnce: true });
@@ -65,7 +104,7 @@ export default function NewsPreview() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {news.map((item, i) => (
+          {sortedNews.map((item, i) => (
             <motion.div
               key={item.title}
               initial={{ opacity: 0, y: 50 }}
@@ -90,7 +129,7 @@ export default function NewsPreview() {
                     </motion.span>
                     {/* Tag overlay */}
                     <div className="absolute top-4 left-4">
-                      <span className={`flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-sm bg-white/90 text-navy`}>
+                      <span className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-sm bg-white/90 text-navy">
                         <Tag size={10} />
                         {item.tag}
                       </span>
@@ -109,10 +148,6 @@ export default function NewsPreview() {
                     <p className="text-navy/60 text-sm leading-relaxed mb-4">
                       {item.excerpt}
                     </p>
-                    <div className="flex items-center gap-2 text-teal font-bold text-sm group-hover:gap-3 transition-all">
-                      Lire la suite
-                      <ArrowRight size={14} />
-                    </div>
                   </div>
                 </div>
               </Link>

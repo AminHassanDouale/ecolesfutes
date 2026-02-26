@@ -23,7 +23,7 @@ const navLinks = [
     label: "Niveaux",
     href: "#",
     dropdown: [
-      { label: "🌸 Maternelle", href: "/niveaux/maternelle", desc: "2 – 5 ans" },
+      { label: "🌸 Maternelle", href: "/niveaux/maternelle", desc: "2 ans et demi – 5 ans" },
       { label: "📚 Primaire", href: "/niveaux/primaire", desc: "6 – 11 ans" },
       { label: "🚀 Collège", href: "/niveaux/college", desc: "12 – 15 ans" },
     ],
@@ -110,9 +110,13 @@ export default function Navbar() {
               <motion.div
                 whileHover={{ rotate: 10, scale: 1.1 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="w-12 h-12 rounded-2xl bg-gradient-to-br from-teal-400 to-teal-dark flex items-center justify-center shadow-glow"
+                className="w-12 h-12 rounded-2xl overflow-hidden shadow-glow bg-white flex items-center justify-center"
               >
-                <span className="text-2xl">🦉</span>
+                <img
+                  src="/logos.png"
+                  alt="Les Petits Futés logo"
+                  className="w-full h-full object-cover"
+                />
               </motion.div>
               <div>
                 <div className="font-serif font-bold text-navy leading-tight text-lg">

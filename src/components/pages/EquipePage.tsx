@@ -1,70 +1,20 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useForm } from "react-hook-form";
+import { X, Send, Paperclip } from "lucide-react";
 import AnimatedSection from "@/components/shared/AnimatedSection";
 import SectionHeader from "@/components/shared/SectionHeader";
 
 const directors = [
   {
-    emoji: "👩‍💼",
-    name: "Mme. Directrice Principale",
-    role: "Directrice Générale",
+    emoji: "👨‍💼",
+    name: "M. Abdoulfatah",
+    role: "Directeur Général",
     experience: "15 ans d'expérience",
     quote: "Notre mission est de former des êtres complets — intellectuellement curieux, émotionnellement équilibrés et socialement responsables.",
     speciality: "Pédagogie & Management",
-  },
-];
-
-const departments = [
-  {
-    dept: "Maternelle",
-    emoji: "🌸",
-    color: "from-pink-50 to-rose-50",
-    border: "border-pink-200",
-    accent: "text-pink-600",
-    teachers: [
-      { emoji: "👩‍🏫", name: "Mme. Koné A.", role: "Enseignante Petite Section", exp: "8 ans", specialty: "Éveil & Motricité" },
-      { emoji: "👩‍🏫", name: "Mme. Diallo F.", role: "Enseignante Grande Section", exp: "6 ans", specialty: "Langage & Pré-lecture" },
-      { emoji: "👩", name: "Mme. Bah S.", role: "Auxiliaire de puériculture", exp: "10 ans", specialty: "Soin & Bien-être" },
-    ],
-  },
-  {
-    dept: "Primaire",
-    emoji: "📚",
-    color: "from-teal-50 to-cyan-50",
-    border: "border-teal-200",
-    accent: "text-teal",
-    teachers: [
-      { emoji: "👨‍🏫", name: "M. Traoré B.", role: "Enseignant CP-CE1", exp: "12 ans", specialty: "Français & Maths" },
-      { emoji: "👩‍🏫", name: "Mme. Soumaré I.", role: "Enseignante CE2-CM1", exp: "9 ans", specialty: "Sciences & Histoire" },
-      { emoji: "👨‍🏫", name: "M. Camara K.", role: "Enseignant CM2", exp: "7 ans", specialty: "Mathématiques & Anglais" },
-      { emoji: "👩‍🏫", name: "Mme. Fofana L.", role: "Enseignante EPS & Arts", exp: "5 ans", specialty: "Sport & Créativité" },
-    ],
-  },
-  {
-    dept: "Collège",
-    emoji: "🚀",
-    color: "from-blue-50 to-indigo-50",
-    border: "border-blue-200",
-    accent: "text-blue-700",
-    teachers: [
-      { emoji: "👨‍🏫", name: "M. Coulibaly D.", role: "Prof. Mathématiques", exp: "14 ans", specialty: "Algèbre & Géométrie" },
-      { emoji: "👩‍🏫", name: "Mme. N&apos;Diaye A.", role: "Prof. Français & Littérature", exp: "11 ans", specialty: "Expression & Analyse" },
-      { emoji: "👨‍🏫", name: "M. Barry O.", role: "Prof. Sciences", exp: "8 ans", specialty: "SVT & Chimie" },
-      { emoji: "👩‍🏫", name: "Mme. Sylla M.", role: "Prof. Anglais", exp: "10 ans", specialty: "Communication & TOEFL" },
-    ],
-  },
-  {
-    dept: "Administration & Soutien",
-    emoji: "🏢",
-    color: "from-cream to-cream-dark",
-    border: "border-cream-dark",
-    accent: "text-navy",
-    teachers: [
-      { emoji: "👩", name: "Mme. Keïta R.", role: "Secrétaire principale", exp: "7 ans", specialty: "Accueil & Organisation" },
-      { emoji: "👩‍⚕️", name: "Mme. Sow H.", role: "Infirmière scolaire", exp: "5 ans", specialty: "Santé & Prévention" },
-      { emoji: "👨", name: "M. Diané C.", role: "Conseiller pédagogique", exp: "9 ans", specialty: "Orientation & Soutien" },
-    ],
   },
 ];
 
@@ -75,7 +25,196 @@ const values = [
   { emoji: "🌱", title: "Croissance", desc: "Nous grandissons avec nos élèves, chaque jour." },
 ];
 
+type CandidatureForm = {
+  nomComplet: string;
+  email: string;
+  telephone: string;
+  poste: string;
+  message: string;
+  cv: FileList;
+  diplomes: FileList;
+};
+
+function CandidatureModal({ onClose }: { onClose: () => void }) {
+  const [submitted, setSubmitted] = useState(false);
+  const { register, handleSubmit, formState: { errors } } = useForm<CandidatureForm>();
+
+  const onSubmit = (data: CandidatureForm) => {
+    console.log(data);
+    setSubmitted(true);
+  };
+
+  return (
+    <AnimatePresence>
+      <motion.div
+        className="fixed inset-0 z-50 flex items-center justify-center p-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        {/* Backdrop */}
+        <motion.div
+          className="absolute inset-0 bg-navy/70 backdrop-blur-sm"
+          onClick={onClose}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        />
+
+        {/* Modal */}
+        <motion.div
+          className="relative z-10 bg-white rounded-3xl shadow-2xl w-full max-w-xl max-h-[90vh] overflow-y-auto"
+          initial={{ opacity: 0, scale: 0.9, y: 30 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.9, y: 30 }}
+          transition={{ type: "spring", stiffness: 200, damping: 20 }}
+        >
+          {/* Header */}
+          <div className="sticky top-0 bg-white rounded-t-3xl px-8 pt-8 pb-4 border-b border-cream-dark z-10">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="font-serif font-bold text-navy text-2xl">Candidature spontanée</h2>
+                <p className="text-navy/50 text-sm mt-1">Rejoignez l&apos;équipe des Petits Futés</p>
+              </div>
+              <button
+                onClick={onClose}
+                className="w-10 h-10 rounded-full bg-cream flex items-center justify-center hover:bg-cream-dark transition-colors"
+              >
+                <X size={18} className="text-navy" />
+              </button>
+            </div>
+          </div>
+
+          <div className="px-8 pb-8 pt-6">
+            {submitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="text-center py-10"
+              >
+                <div className="text-6xl mb-4">✅</div>
+                <h3 className="font-serif text-xl font-bold text-navy mb-3">
+                  Candidature envoyée !
+                </h3>
+                <p className="text-navy/60 text-sm">
+                  Nous reviendrons vers vous dans les meilleurs délais. Merci de votre intérêt pour notre école.
+                </p>
+                <button
+                  onClick={onClose}
+                  className="mt-6 btn-primary"
+                >
+                  Fermer
+                </button>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+                {/* Nom complet */}
+                <div>
+                  <label className="block text-sm font-bold text-navy mb-1.5">Nom complet *</label>
+                  <input
+                    {...register("nomComplet", { required: true })}
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.nomComplet ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal outline-none transition-colors`}
+                    placeholder="Votre nom et prénom"
+                  />
+                </div>
+
+                {/* Email & Téléphone */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-bold text-navy mb-1.5">Email *</label>
+                    <input
+                      type="email"
+                      {...register("email", { required: true })}
+                      className={`w-full px-4 py-3 rounded-xl border ${errors.email ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal outline-none transition-colors`}
+                      placeholder="votre@email.com"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-bold text-navy mb-1.5">Téléphone *</label>
+                    <input
+                      {...register("telephone", { required: true })}
+                      className={`w-full px-4 py-3 rounded-xl border ${errors.telephone ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal outline-none transition-colors`}
+                      placeholder="+253 XX XX XX XX"
+                    />
+                  </div>
+                </div>
+
+                {/* Poste */}
+                <div>
+                  <label className="block text-sm font-bold text-navy mb-1.5">Poste souhaité *</label>
+                  <select
+                    {...register("poste", { required: true })}
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.poste ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal outline-none transition-colors`}
+                  >
+                    <option value="">Choisir un poste</option>
+                    <option value="maternelle">👶 Enseignant(e) Maternelle</option>
+                    <option value="primaire">📚 Enseignant(e) Primaire</option>
+                    <option value="college">🚀 Enseignant(e) Collège</option>
+                    <option value="administration">🏢 Administration</option>
+                    <option value="autre">Autre</option>
+                  </select>
+                </div>
+
+                {/* Message */}
+                <div>
+                  <label className="block text-sm font-bold text-navy mb-1.5">Message de présentation *</label>
+                  <textarea
+                    {...register("message", { required: true })}
+                    rows={4}
+                    className={`w-full px-4 py-3 rounded-xl border ${errors.message ? "border-red-400" : "border-cream-dark"} bg-cream focus:border-teal outline-none transition-colors resize-none`}
+                    placeholder="Parlez-nous de vous, de votre expérience et de votre motivation..."
+                  />
+                </div>
+
+                {/* Fichiers */}
+                <div className="space-y-4">
+                  <h4 className="font-bold text-navy text-sm flex items-center gap-2">
+                    <Paperclip size={16} className="text-teal" /> Pièces jointes
+                    <span className="text-navy/40 font-normal">(PDF, JPG, PNG — 5 Mo max)</span>
+                  </h4>
+
+                  <div>
+                    <label className="block text-sm font-bold text-navy mb-1.5">CV *</label>
+                    <div className={`w-full px-4 py-3 rounded-xl border ${errors.cv ? "border-red-400" : "border-cream-dark"} bg-cream`}>
+                      <input
+                        type="file"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        {...register("cv", { required: true })}
+                        className="w-full text-sm text-navy/70 file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-teal/10 file:text-teal hover:file:bg-teal/20 cursor-pointer"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-bold text-navy mb-1.5">Diplômes & Attestations</label>
+                    <div className="w-full px-4 py-3 rounded-xl border border-cream-dark bg-cream">
+                      <input
+                        type="file"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        multiple
+                        {...register("diplomes")}
+                        className="w-full text-sm text-navy/70 file:mr-4 file:py-1.5 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-bold file:bg-gold/20 file:text-gold hover:file:bg-gold/30 cursor-pointer"
+                      />
+                    </div>
+                    <p className="text-xs text-navy/40 mt-1">Vous pouvez joindre plusieurs fichiers</p>
+                  </div>
+                </div>
+
+                <button type="submit" className="w-full btn-primary justify-center !py-4 text-base">
+                  Envoyer ma candidature
+                  <Send size={18} />
+                </button>
+              </form>
+            )}
+          </div>
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
 export default function EquipePage() {
+  const [showModal, setShowModal] = useState(false);
+
   return (
     <div>
       {/* Hero */}
@@ -87,7 +226,7 @@ export default function EquipePage() {
             animate={{ opacity: 1, y: 0 }}
             className="inline-flex items-center gap-2 bg-teal/20 border border-teal/40 text-teal rounded-full px-5 py-2 text-sm font-bold mb-6"
           >
-            👩‍🏫 Notre Équipe
+            👨‍🏫 Notre Équipe
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
@@ -104,8 +243,8 @@ export default function EquipePage() {
             transition={{ delay: 0.4 }}
             className="text-white/80 text-xl leading-relaxed"
           >
-            +40 enseignants qualifiés, formés et passionnés qui donnent le meilleur
-            d&apos;eux-mêmes pour l&apos;épanouissement de chaque élève.
+            Une équipe qualifiée, formée et passionnée qui donne le meilleur
+            d&apos;elle-même pour l&apos;épanouissement de chaque élève.
           </motion.p>
         </div>
         <div className="absolute bottom-0 left-0 w-full">
@@ -115,7 +254,7 @@ export default function EquipePage() {
         </div>
       </section>
 
-      {/* Message direction */}
+      {/* Directeur */}
       <section className="py-20 bg-cream">
         <div className="max-w-5xl mx-auto px-4 sm:px-6">
           {directors.map((dir) => (
@@ -165,44 +304,6 @@ export default function EquipePage() {
         </div>
       </section>
 
-      {/* Team by dept */}
-      {departments.map((dept, di) => (
-        <section key={dept.dept} className={`py-16 ${di % 2 === 0 ? "bg-cream" : "bg-white"}`}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6">
-            <AnimatedSection>
-              <div className="flex items-center gap-4 mb-10">
-                <span className="text-4xl">{dept.emoji}</span>
-                <div>
-                  <h2 className={`font-serif font-bold text-3xl ${dept.accent}`}>{dept.dept}</h2>
-                  <p className="text-navy/50 text-sm">{dept.teachers.length} membres</p>
-                </div>
-              </div>
-            </AnimatedSection>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {dept.teachers.map((teacher, i) => (
-                <AnimatedSection key={teacher.name} delay={i * 0.1} direction="up">
-                  <motion.div
-                    whileHover={{ y: -6 }}
-                    className={`bg-gradient-to-br ${dept.color} border ${dept.border} rounded-3xl p-6 text-center`}
-                  >
-                    <div className="w-20 h-20 rounded-full bg-white/70 flex items-center justify-center text-4xl mx-auto mb-4 shadow-card">
-                      {teacher.emoji}
-                    </div>
-                    <h4 className="font-bold text-navy mb-1">{teacher.name}</h4>
-                    <p className={`text-xs font-semibold ${dept.accent} mb-2`}>{teacher.role}</p>
-                    <div className="flex flex-wrap justify-center gap-2 mt-3">
-                      <span className="bg-white/70 text-navy text-xs px-2 py-1 rounded-full">{teacher.exp}</span>
-                      <span className="bg-white/70 text-navy text-xs px-2 py-1 rounded-full">{teacher.specialty}</span>
-                    </div>
-                  </motion.div>
-                </AnimatedSection>
-              ))}
-            </div>
-          </div>
-        </section>
-      ))}
-
       {/* Join team CTA */}
       <section className="py-20 bg-gradient-to-r from-teal to-teal-dark text-center">
         <AnimatedSection>
@@ -215,12 +316,18 @@ export default function EquipePage() {
               Vous êtes enseignant passionné ? Nous recrutons régulièrement des talents
               engagés pour notre mission éducative.
             </p>
-            <a href="mailto:rh@petitsfutes.com" className="bg-white text-teal font-bold px-8 py-4 rounded-full hover:-translate-y-1 hover:shadow-lg transition-all inline-flex items-center gap-2">
+            <button
+              onClick={() => setShowModal(true)}
+              className="bg-white text-teal font-bold px-8 py-4 rounded-full hover:-translate-y-1 hover:shadow-lg transition-all inline-flex items-center gap-2"
+            >
               Envoyer ma candidature →
-            </a>
+            </button>
           </div>
         </AnimatedSection>
       </section>
+
+      {/* Modal */}
+      {showModal && <CandidatureModal onClose={() => setShowModal(false)} />}
     </div>
   );
 }

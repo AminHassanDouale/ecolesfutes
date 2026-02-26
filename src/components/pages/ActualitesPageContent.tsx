@@ -8,45 +8,80 @@ import SectionHeader from "@/components/shared/SectionHeader";
 
 const allNews = [
   {
-    tag: "Résultats",
-    emoji: "🏆",
-    date: "Janvier 2025",
-    title: "98% de réussite aux examens nationaux 2024",
-    excerpt: "Nos élèves ont brillé lors des examens de fin d'année. Félicitations à tous nos lauréats et à leurs familles !",
-    category: "Résultats",
-    featured: true,
-  },
-  {
-    tag: "Événement",
-    emoji: "🎭",
-    date: "Décembre 2024",
-    title: "Gala de fin d'année 2024 : une soirée mémorable",
-    excerpt: "Chants, danses, sketchs et remises de diplômes... Le gala annuel a réuni toute la communauté dans la joie et l'émotion.",
-    category: "Événements",
-    featured: false,
-  },
-  {
     tag: "ScolApp",
     emoji: "📱",
-    date: "Novembre 2024",
+    date: "Février 2026",
+    sortDate: new Date("2026-02-01"),
     title: "Nouvelle version de ScolApp disponible dès maintenant",
     excerpt: "Téléchargez la v3.0 avec paiement en ligne, notifications améliorées et nouveau design épuré.",
     category: "ScolApp",
     featured: false,
   },
   {
+    tag: "Fête de l'Année",
+    emoji: "🎆",
+    date: "Décembre 2025",
+    sortDate: new Date("2025-12-31"),
+    title: "Fête de l'Année : célébrons ensemble !",
+    excerpt: "Retrouvez-nous pour une soirée festive pleine de surprises, de musique et de partage pour accueillir la nouvelle année en famille.",
+    category: "Événements",
+    featured: false,
+  },
+  {
+    tag: "Fête de Noël",
+    emoji: "🎄",
+    date: "Décembre 2025",
+    sortDate: new Date("2025-12-20"),
+    title: "Spectacle de Noël : magie et émerveillement",
+    excerpt: "Les enfants ont présenté un magnifique spectacle de Noël, mettant en scène chants et pièces de théâtre devant des parents ravis.",
+    category: "Événements",
+    featured: false,
+  },
+  {
+    tag: "Résultats",
+    emoji: "🏆",
+    date: "Juin 2025",
+    sortDate: new Date("2025-06-25"),
+    title: "98% de réussite aux examens nationaux 2024-2025",
+    excerpt: "Nos élèves ont brillé lors des examens de fin d'année. Félicitations à tous nos lauréats et à leurs familles !",
+    category: "Résultats",
+    featured: true,
+  },
+  {
+    tag: "Fête de Fin d'École",
+    emoji: "🎓",
+    date: "Juin 2025",
+    sortDate: new Date("2025-06-10"),
+    title: "Fête de fin d'école : une soirée inoubliable",
+    excerpt: "Chants, danses, saynètes et remises de diplômes... La fête de fin d'école a réuni toute la communauté scolaire dans la joie et l'émotion.",
+    category: "Événements",
+    featured: false,
+  },
+  {
     tag: "Pédagogie",
     emoji: "💡",
-    date: "Octobre 2024",
+    date: "Novembre 2024",
+    sortDate: new Date("2024-11-01"),
     title: "Lancement du programme de tutorat entre élèves",
     excerpt: "Les grands élèves du collège aident les plus jeunes : une initiative qui renforce la solidarité et améliore les résultats.",
     category: "Pédagogie",
     featured: false,
   },
   {
+    tag: "Halloween",
+    emoji: "🎃",
+    date: "Octobre 2024",
+    sortDate: new Date("2024-10-31"),
+    title: "Halloween à l'école : frissons et déguisements !",
+    excerpt: "Sorcières, vampires et fantômes ont envahi l'école ! Les élèves ont rivalisé de créativité pour leurs costumes lors de cette journée spéciale.",
+    category: "Événements",
+    featured: false,
+  },
+  {
     tag: "Sport",
     emoji: "⚽",
     date: "Septembre 2024",
+    sortDate: new Date("2024-09-15"),
     title: "Tournoi inter-classes : l'équipe de 5ème championne !",
     excerpt: "La 5ème B s'est imposée en finale lors du tournoi annuel de football. Bravo pour l'esprit sportif de tous !",
     category: "Événements",
@@ -56,6 +91,7 @@ const allNews = [
     tag: "Conseil",
     emoji: "📖",
     date: "Août 2024",
+    sortDate: new Date("2024-08-01"),
     title: "5 conseils pour aider votre enfant à la rentrée",
     excerpt: "L'équipe pédagogique partage ses meilleurs conseils pour accompagner votre enfant dans les premiers jours de l'année scolaire.",
     category: "Conseils",
@@ -63,20 +99,24 @@ const allNews = [
   },
 ];
 
+// Sort by most recent first
+const sortedNews = [...allNews].sort((a, b) => b.sortDate.getTime() - a.sortDate.getTime());
+
 const categories = ["Tous", "Résultats", "Événements", "ScolApp", "Pédagogie", "Conseils"];
 
 export default function ActualitesPageContent() {
   const [activeCategory, setActiveCategory] = useState("Tous");
   const [search, setSearch] = useState("");
 
-  const filtered = allNews.filter((n) => {
+  const filtered = sortedNews.filter((n) => {
     const matchesCategory = activeCategory === "Tous" || n.category === activeCategory;
-    const matchesSearch = n.title.toLowerCase().includes(search.toLowerCase()) ||
+    const matchesSearch =
+      n.title.toLowerCase().includes(search.toLowerCase()) ||
       n.excerpt.toLowerCase().includes(search.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
-  const featured = allNews.find((n) => n.featured);
+  const featured = sortedNews.find((n) => n.featured);
 
   return (
     <div>
@@ -162,7 +202,7 @@ export default function ActualitesPageContent() {
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
                 placeholder="Rechercher..."
-                className="w-full pl-11 pr-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal transition-colors"
+                className="w-full pl-11 pr-4 py-3 rounded-xl border border-cream-dark bg-cream focus:border-teal transition-colors outline-none"
               />
             </div>
           </div>
@@ -197,8 +237,15 @@ export default function ActualitesPageContent() {
                 >
                   <div className="h-44 bg-navy flex items-center justify-center relative overflow-hidden">
                     <div className="absolute inset-0 dot-pattern opacity-20" />
-                    <span className="text-6xl relative z-10">{article.emoji}</span>
-                    <span className="absolute top-3 left-3 bg-white/90 text-navy text-xs font-bold px-3 py-1 rounded-full">
+                    <motion.span
+                      className="text-6xl relative z-10"
+                      animate={{ scale: [1, 1.05, 1] }}
+                      transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}
+                    >
+                      {article.emoji}
+                    </motion.span>
+                    <span className="absolute top-3 left-3 bg-white/90 text-navy text-xs font-bold px-3 py-1 rounded-full flex items-center gap-1">
+                      <Tag size={10} />
                       {article.tag}
                     </span>
                   </div>

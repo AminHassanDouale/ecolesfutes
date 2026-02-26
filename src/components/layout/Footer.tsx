@@ -12,11 +12,12 @@ import {
   Youtube,
   ArrowRight,
   Heart,
+  Smartphone,
 } from "lucide-react";
 
 const footerLinks = {
   niveaux: [
-    { label: "Maternelle (2-5 ans)", href: "/niveaux/maternelle" },
+    { label: "Maternelle (2 ans et demi -5 ans)", href: "/niveaux/maternelle" },
     { label: "Primaire (6-11 ans)", href: "/niveaux/primaire" },
     { label: "Collège (12-15 ans)", href: "/niveaux/college" },
   ],
@@ -151,26 +152,30 @@ export default function Footer() {
               <ul className="space-y-3">
                 <li className="flex items-start gap-2.5 text-white/70 text-sm">
                   <MapPin size={16} className="text-teal mt-0.5 shrink-0" />
-                  <span>Gabode 4, Djibouti-Ville<br />République de Djibouti</span>
+                  <span>Gabode 5, Djibouti-Ville<br />République de Djibouti</span>
                 </li>
                 <li className="flex items-center gap-2.5 text-white/70 text-sm">
                   <Phone size={16} className="text-teal shrink-0" />
-                  <a href="tel:+XXXXXXXXXXX" className="hover:text-teal transition-colors">
-                    +XXX XX XX XX XX
+                  <a href="tel:+25321348696" className="hover:text-teal transition-colors">
+                    +253 21 34 86 96
+                  </a>
+                </li>
+                <li className="flex items-center gap-2.5 text-white/70 text-sm">
+                  <Smartphone size={16} className="text-teal shrink-0" />
+                  <a href="tel:+25377198027" className="hover:text-teal transition-colors">
+                    +253 77 19 80 27
                   </a>
                 </li>
                 <li className="flex items-center gap-2.5 text-white/70 text-sm">
                   <Mail size={16} className="text-teal shrink-0" />
-                  <a href="mailto:contact@lesPetitsFutes.com" className="hover:text-teal transition-colors">
+                  <a href="mailto:contact@petitsfutes.com" className="hover:text-teal transition-colors">
                     contact@petitsfutes.com
                   </a>
                 </li>
                 <li className="flex items-start gap-2.5 text-white/70 text-sm">
                   <Clock size={16} className="text-teal mt-0.5 shrink-0" />
                   <span>
-                    Dim–Jeudi : 7h30 – 17h30
-                    <br />
-                    Sam : 8h00 – 12h00
+                    Dim–Jeudi : 7:00 – 13h00
                   </span>
                 </li>
               </ul>
@@ -187,7 +192,6 @@ export default function Footer() {
               <Heart size={14} className="text-orange fill-orange mx-1" />
               pour l&apos;excellence éducative
             </div>
-            
           </div>
         </div>
       </div>

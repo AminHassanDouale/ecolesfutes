@@ -11,7 +11,7 @@ const subjects = [
   { emoji: "🔢", label: "Mathématiques", color: "from-teal to-cyan-600" },
   { emoji: "🔬", label: "Sciences", color: "from-green-400 to-emerald-600" },
   { emoji: "🌍", label: "Hist.-Géo.", color: "from-yellow-400 to-amber-600" },
-  { emoji: "🇬🇧", label: "Anglais", color: "from-red-400 to-rose-600" },
+  { emoji: "AR", label: "Arab", color: "from-red-400 to-rose-600" },
   { emoji: "💻", label: "Informatique", color: "from-purple-400 to-violet-600" },
   { emoji: "⚽", label: "EPS", color: "from-orange to-orange-dark" },
 ];
